@@ -18,13 +18,6 @@ CMAKE_PACKAGES=()
 while [ $# -ge 1 ]; do
   case $1 in
   -pn | --project-name)
-    #if [ "$2" -eq "$2" ] 2>/dev/null; then
-    #  number_of_processes=$2
-    #  shift 2
-    #else
-    #  echo "Option -pn requires project name." >&2
-    #  exit 1
-    #fi
     PROJECT_NAME=$2
     shift 2
     ;;
@@ -41,7 +34,6 @@ while [ $# -ge 1 ]; do
     shift 2
     ;;
   -ae | --author-email)
-    echo $2
     AUTHOR_EMAIL=$2
     shift 2
     ;;
@@ -87,29 +79,35 @@ printf -v CMAKE_PACKAGES "%s " "${CMAKE_PACKAGES[@]}"
 CMAKE_PACKAGES=${CMAKE_PACKAGES%?}
 
 sed -i "s/more_project_name/$PROJECT_NAME/g" ./CMakeLists.txt || exit 1
-sed -i "s/more_project_name/$PROJECT_NAME/g" ./plugins.xml || exit 1
-sed -i "s/more_project_name/$PROJECT_NAME/g" ./package.xml || exit 1
-
 sed -i "s/more_filesname/$CLASS_NAME/g" ./CMakeLists.txt || exit 1
+sed -i "s/more_cmake_packages/$CMAKE_PACKAGES/g" ./CMakeLists.txt || exit 1
+echo -e "CMakeLists.txt done"
+
+sed -i "s/more_project_name/$PROJECT_NAME/g" ./plugins.xml || exit 1
 sed -i "s/more_class_name/$CLASS_NAME/g" ./plugins.xml || exit 1
 sed -i "s/more_namespace_name/$NAMESPACE_NAME/g" ./plugins.xml || exit 1
-
-sed -i "s/more_cmake_packages/$CMAKE_PACKAGES/g" ./CMakeLists.txt || exit 1
+echo -e "plugins.xml done"
 
 sed -i "s/more_email/$AUTHOR_EMAIL/g" ./package.xml || exit 1
 sed -i "s/more_name/$AUTHOR_NAME/g" ./package.xml || exit 1
+sed -i "s/more_project_name/$PROJECT_NAME/g" ./package.xml || exit 1
+echo -e "package.xml done"
 
-mv ./launch/example.launch "./launch/$PROJECT_NAME.launch"
-mv ./include/example.h "./include/$CLASS_NAME.h"
-mv ./src/example.cpp "./src/$CLASS_NAME.cpp"
+mv ./include/example.h "./include/$CLASS_NAME.h" || exit 1
+sed -i "s/CLASS_NAME/$CLASS_NAME/g" "./include/$CLASS_NAME.h" || exit 1
+sed -i "s/NAMESPACE_NAME/$NAMESPACE_NAME/g" "./include/$CLASS_NAME.h" || exit 1
+echo -e "creating $CLASS_NAME.h done"
 
-sed -i "s/CLASS_NAME/$CLASS_NAME/g" "./include/$CLASS_NAME.h"
-sed -i "s/NAMESPACE_NAME/$NAMESPACE_NAME/g" "./include/$CLASS_NAME.h"
+mv ./src/example.cpp "./src/$CLASS_NAME.cpp" || exit 1
+sed -i "s/CLASS_NAME/$CLASS_NAME/g" "./src/$CLASS_NAME.cpp" || exit 1
+sed -i "s/NAMESPACE_NAME/$NAMESPACE_NAME/g" "./src/$CLASS_NAME.cpp" || exit
+echo -e "creating $CLASS_NAME.h done"
 
-sed -i "s/CLASS_NAME/$CLASS_NAME/g" "./src/$CLASS_NAME.cpp"
-sed -i "s/NAMESPACE_NAME/$NAMESPACE_NAME/g" "./src/$CLASS_NAME.cpp"
+mv ./launch/example.launch "./launch/$PROJECT_NAME.launch" || exit 1
+sed -i "s/CLASS_NAME/$CLASS_NAME/g" "./launch/$PROJECT_NAME.launch" || exit 1
+sed -i "s/NAMESPACE_NAME/$NAMESPACE_NAME/g" "./launch/$PROJECT_NAME.launch" || exit 1
+sed -i "s/PROJECT_NAME/$PROJECT_NAME/g" "./launch/$PROJECT_NAME.launch" || exit 1
+echo -e "creating $CLASS_NAME.launch done\n"
 
-sed -i "s/CLASS_NAME/$CLASS_NAME/g" "./launch/$PROJECT_NAME.launch"
-sed -i "s/NAMESPACE_NAME/$NAMESPACE_NAME/g" "./launch/$PROJECT_NAME.launch"
-sed -i "s/PROJECT_NAME/$PROJECT_NAME/g" "./launch/$PROJECT_NAME.launch"
-
+rm -rf .git || exit 1
+echo "Creating empty $PROJECT_NAME project finished. Now you can rename this directory, add it to git and start working."
