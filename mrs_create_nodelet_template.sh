@@ -5,8 +5,31 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+PROJECT_NAME=''
+NAMESPACE_NAME=''
+CLASS_NAME=''
+AUTHOR_NAME=''
+AUTHOR_EMAIL=''
+PROJECT_DESCRIPTION=''
+
 CMAKE_PACKAGES=()
 
+help() {
+    echo "
+  Usage: ./mrs_create_nodelet_template.sh [options]
+  Options:
+    -h      --help                  Show help message.
+    -pn     --project-name          Project name. example_project by default.
+    -pd     --project-description  
+    -cp     --cmake-packages        Used for cmake "find_package". roscpp and mrs_lib are default packages. Write packages as a one space-seperated string (in columns). Example: 'std_msgs roscpp mrs_lib'
+    -nn     --namespace-name        Namespace
+    -cn     --class-name            Nodelet class name
+    -an     --author-name           Author name
+    -ae     --author-email          Should be cpecified for correct compilation!
+    "
+    exit 0
+
+}
 while [ $# -ge 1 ]; do
   case $1 in
   -pn | --project-name)
@@ -38,19 +61,7 @@ while [ $# -ge 1 ]; do
     shift 2
     ;;
   -h | --help)
-    echo "
-  Usage: ./mrs_create_nodelet_template.sh [options]
-  Options:
-    -h      --help                  Show help message.
-    -pn     --project-name          Project name. example_project by default.
-    -pd     --project-description  
-    -cp     --cmake-packages        Used for cmake "find_package". roscpp and mrs_lib are default packages. Write packages as a one space-seperated string (in columns). Example: 'std_msgs roscpp mrs_lib'
-    -nn     --namespace-name        Namespace
-    -cn     --class-name            Nodelet class name
-    -an     --author-name           Author name
-    -ae     --author-email          Should be cpecified for correct compilation!
-    "
-    exit 0
+    help
     ;;
   \?)
     echo "Invalid option: -$OPTARG" >&2
@@ -69,21 +80,25 @@ done
 
 if [ -z "$PROJECT_NAME" ]; then 
   echo "Project name should be cpecified";
+  help;
   exit 1; 
 fi
 
 if [ -z "$NAMESPACE_NAME" ]; then 
   echo "Namespace name should be cpecified";
+  help;
   exit 1; 
 fi
 
 if [ -z "$CLASS_NAME" ]; then 
   echo "Class name (nodelet name) should be cpecified";
+  help;
   exit 1; 
 fi
 
 if [ -z "$AUTHOR_EMAIL" ]; then 
   echo "Author email should be cpecified";
+  help;
   exit 1; 
 fi
 
