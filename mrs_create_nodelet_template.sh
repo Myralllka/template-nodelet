@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -o xtrace
+# set -o xtrace
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -60,11 +60,11 @@ while [ $# -ge 1 ]; do
     -h      --help                  Show help message.
     -pn     --project-name          Project name. example_project by default.
     -pd     --project-description  
-    -cp     --cmake-packages        Used for cmake "find_package "
-    -nn     --namespace-name
-    -cn     --class-name
-    -an     --author-name
-    -ae     --author-email
+    -cp     --cmake-packages        Used for cmake "find_package". roscpp and mrs_lib are default packages. Write packages as a one space-seperated string (in columns). Example: 'std_msgs roscpp mrs_lib'
+    -nn     --namespace-name        Namespace
+    -cn     --class-name            Nodelet class name
+    -an     --author-name           Author name
+    -ae     --author-email          Should be cpecified for correct compilation!
     "
     exit 0
     ;;
@@ -82,7 +82,7 @@ while [ $# -ge 1 ]; do
   esac
 done
 
-printf -v CMAKE_PACKAGES "%s\n" "${CMAKE_PACKAGES[@]}"
+printf -v CMAKE_PACKAGES "%s " "${CMAKE_PACKAGES[@]}"
 
 CMAKE_PACKAGES=${CMAKE_PACKAGES%?}
 
