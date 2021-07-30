@@ -114,7 +114,7 @@ else
       ;;
     *)
       if [ $# -ge 0 ] ; then
-        echo "Error: wrong parameters cpecified"
+        echo "Error: wrong parameters cpecified: $1"
         echo $1
         help
         exit 1
