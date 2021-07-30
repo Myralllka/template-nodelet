@@ -5,15 +5,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-PROJECT_NAME=example_project
-NAMESPACE_NAME=example_namespace_name
-CLASS_NAME=example_class_name
-AUTHOR_EMAIL=example_email
-AUTHOR_NAME=example_name
-PROJECT_DESCRIPTION=example_project_description
-
 CMAKE_PACKAGES=()
-
 
 while [ $# -ge 1 ]; do
   case $1 in
@@ -78,36 +70,45 @@ printf -v CMAKE_PACKAGES "%s " "${CMAKE_PACKAGES[@]}"
 
 CMAKE_PACKAGES=${CMAKE_PACKAGES%?}
 
-sed -i "s/more_project_name/$PROJECT_NAME/g" ./CMakeLists.txt || exit 1
-sed -i "s/more_filesname/$CLASS_NAME/g" ./CMakeLists.txt || exit 1
-sed -i "s/more_cmake_packages/$CMAKE_PACKAGES/g" ./CMakeLists.txt || exit 1
-echo -e "CMakeLists.txt done"
+git clone git@github.com:Myralllka/template-nodelet.git "mrs_$PROJECT_NAME"
 
-sed -i "s/more_project_name/$PROJECT_NAME/g" ./plugins.xml || exit 1
-sed -i "s/more_class_name/$CLASS_NAME/g" ./plugins.xml || exit 1
-sed -i "s/more_namespace_name/$NAMESPACE_NAME/g" ./plugins.xml || exit 1
-echo -e "plugins.xml done"
+(
+  cd "mrs_$PROJECT_NAME" 
+  
+  sed -i "s/more_project_name/$PROJECT_NAME/g" ./CMakeLists.txt || exit 1
+  sed -i "s/more_filesname/$CLASS_NAME/g" ./CMakeLists.txt || exit 1
+  sed -i "s/more_cmake_packages/$CMAKE_PACKAGES/g" ./CMakeLists.txt || exit 1
+  echo -e "CMakeLists.txt done"
 
-sed -i "s/more_email/$AUTHOR_EMAIL/g" ./package.xml || exit 1
-sed -i "s/more_name/$AUTHOR_NAME/g" ./package.xml || exit 1
-sed -i "s/more_project_name/$PROJECT_NAME/g" ./package.xml || exit 1
-echo -e "package.xml done"
+  sed -i "s/more_project_name/$PROJECT_NAME/g" ./plugins.xml || exit 1
+  sed -i "s/more_class_name/$CLASS_NAME/g" ./plugins.xml || exit 1
+  sed -i "s/more_namespace_name/$NAMESPACE_NAME/g" ./plugins.xml || exit 1
+  echo -e "plugins.xml done"
 
-mv ./include/example.h "./include/$CLASS_NAME.h" || exit 1
-sed -i "s/CLASS_NAME/$CLASS_NAME/g" "./include/$CLASS_NAME.h" || exit 1
-sed -i "s/NAMESPACE_NAME/$NAMESPACE_NAME/g" "./include/$CLASS_NAME.h" || exit 1
-echo -e "creating $CLASS_NAME.h done"
+  sed -i "s/more_email/$AUTHOR_EMAIL/g" ./package.xml || exit 1
+  sed -i "s/more_name/$AUTHOR_NAME/g" ./package.xml || exit 1
+  sed -i "s/more_project_name/$PROJECT_NAME/g" ./package.xml || exit 1
+  echo -e "package.xml done"
 
-mv ./src/example.cpp "./src/$CLASS_NAME.cpp" || exit 1
-sed -i "s/CLASS_NAME/$CLASS_NAME/g" "./src/$CLASS_NAME.cpp" || exit 1
-sed -i "s/NAMESPACE_NAME/$NAMESPACE_NAME/g" "./src/$CLASS_NAME.cpp" || exit
-echo -e "creating $CLASS_NAME.h done"
+  mv ./include/example.h "./include/$CLASS_NAME.h" || exit 1
+  sed -i "s/CLASS_NAME/$CLASS_NAME/g" "./include/$CLASS_NAME.h" || exit 1
+  sed -i "s/NAMESPACE_NAME/$NAMESPACE_NAME/g" "./include/$CLASS_NAME.h" || exit 1
+  echo -e "creating $CLASS_NAME.h done"
 
-mv ./launch/example.launch "./launch/$PROJECT_NAME.launch" || exit 1
-sed -i "s/CLASS_NAME/$CLASS_NAME/g" "./launch/$PROJECT_NAME.launch" || exit 1
-sed -i "s/NAMESPACE_NAME/$NAMESPACE_NAME/g" "./launch/$PROJECT_NAME.launch" || exit 1
-sed -i "s/PROJECT_NAME/$PROJECT_NAME/g" "./launch/$PROJECT_NAME.launch" || exit 1
-echo -e "creating $CLASS_NAME.launch done\n"
+  mv ./src/example.cpp "./src/$CLASS_NAME.cpp" || exit 1
+  sed -i "s/CLASS_NAME/$CLASS_NAME/g" "./src/$CLASS_NAME.cpp" || exit 1
+  sed -i "s/NAMESPACE_NAME/$NAMESPACE_NAME/g" "./src/$CLASS_NAME.cpp" || exit
+  echo -e "creating $CLASS_NAME.h done"
 
-rm -rf .git || exit 1
-echo "Creating empty $PROJECT_NAME project finished. Now you can rename this directory, add it to git and start working."
+  mv ./launch/example.launch "./launch/$PROJECT_NAME.launch" || exit 1
+  sed -i "s/CLASS_NAME/$CLASS_NAME/g" "./launch/$PROJECT_NAME.launch" || exit 1
+  sed -i "s/NAMESPACE_NAME/$NAMESPACE_NAME/g" "./launch/$PROJECT_NAME.launch" || exit 1
+  sed -i "s/PROJECT_NAME/$PROJECT_NAME/g" "./launch/$PROJECT_NAME.launch" || exit 1
+  echo -e "creating $CLASS_NAME.launch done\n"
+
+  rm -rf .git || exit 1
+  echo "Creating empty $PROJECT_NAME project finished. Now you can rename this directory, add it to git and start working."
+
+)
+
+
