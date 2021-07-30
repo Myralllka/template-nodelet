@@ -8,75 +8,125 @@ set -o pipefail
 PROJECT_NAME=''
 NAMESPACE_NAME=''
 CLASS_NAME=''
-AUTHOR_NAME=''
-AUTHOR_EMAIL=''
+AUTHOR_NAME='todo_name'
+AUTHOR_EMAIL='todo@com'
 PROJECT_DESCRIPTION=''
 
 CMAKE_PACKAGES=()
 
 help() {
     echo "
-  Usage: ./mrs_create_nodelet_template.sh [options]
+  Usage: long form   ./mrs_create_nodelet_template.sh [options]
+  OR:    short form  ./mrs_create_nodelet_template.sh -s project_name namespace_name class_name
   Options:
     -h      --help                  Show help message.
     -pn     --project-name          Project name. example_project by default.
-    -pd     --project-description  
-    -cp     --cmake-packages        Used for cmake "find_package". roscpp and mrs_lib are default packages. Write packages as a one space-seperated string (in columns). Example: 'std_msgs roscpp mrs_lib'
+    -pd     --project-description   Project description. Write description as a one space-separated string (in columns).
+    -cp     --cmake-packages        Used for cmake "find_package". 'roscpp' and 'mrs_lib' are default packages. Write packages as a one space-separated string (in columns). Example: 'std_msgs roscpp mrs_lib'
     -nn     --namespace-name        Namespace
     -cn     --class-name            Nodelet class name
     -an     --author-name           Author name
     -ae     --author-email          Should be cpecified for correct compilation!
     "
     exit 0
-
 }
-while [ $# -ge 1 ]; do
-  case $1 in
-  -pn | --project-name)
-    PROJECT_NAME=$2
-    shift 2
-    ;;
-  -nn | --namespace-name)
-    NAMESPACE_NAME=$2
-    shift 2
-    ;;
-  -cn | --class-name)
-    CLASS_NAME=$2
-    shift 2
-    ;;
-  -an | --author-name)
-    AUTHOR_NAME=$2
-    shift 2
-    ;;
-  -ae | --author-email)
-    AUTHOR_EMAIL=$2
-    shift 2
-    ;;
-  -pd | --project-description)
-    PROJECT_DESCRIPTION=$2
-    shift 2
-    ;;
- -cp | --cmake-package)
-    CMAKE_PACKAGES+=($2)
-    shift 2
-    ;;
-  -h | --help)
-    help
-    ;;
-  \?)
-    echo "Invalid option: -$OPTARG" >&2
-    exit 1
-    ;;
-  :)
-    echo "Option -$OPTARG requires an numerical argument." >&2
-    exit 1
-    ;;
-  *)
-    break
-    ;;
-  esac
-done
 
+if [[ $1 == "-s" ]]; then
+  PROJECT_NAME=$2
+  NAMESPACE_NAME=$3
+  CLASS_NAME=$4
+else
+  while [ $# -ge 1 ]; do
+    case "$1" in
+    -pn | --project-name)
+      if [ $# -ge 2 ] && [[ ! $2 =~ ^-.*$ ]] ; then
+        PROJECT_NAME="$2"
+      else
+        echo "Error: wrong value of $1"
+        exit 1
+      fi
+      shift 2
+      ;;
+    -nn | --namespace-name)
+      if [ $# -ge 2 ] && [[ ! $2 =~ ^-.*$ ]] ; then
+        NAMESPACE_NAME="$2"
+      else
+        echo "Error: wrong value of $1"
+        exit 1
+      fi
+      shift 2
+      ;;
+    -cn | --class-name)
+      if [ $# -ge 2 ] && [[ ! $2 =~ ^-.*$ ]] ; then
+        CLASS_NAME="$2"
+      else 
+        echo "Error: wrong value of $1"
+        exit 1
+      fi
+      shift 2
+      ;;
+    -an | --author-name)
+      if [ $# -ge 2 ] && [[ ! $2 =~ ^-.*$ ]] ; then
+        AUTHOR_NAME="$2"
+      else
+        echo "Error: wrong value of $1"
+        exit 1
+      fi
+      shift 2
+      ;;
+    -ae | --author-email)
+      if [ $# -ge 2 ] && [[ ! $2 =~ ^-.*$ ]] ; then
+        AUTHOR_EMAIL="$2"
+      else
+        echo "Error: wrong value of $1"
+        exit 1
+      fi
+      shift 2
+      ;;
+    -pd | --project-description)
+      if [ $# -ge 2 ] && [[ ! $2 =~ ^-.*$ ]] ; then
+        PROJECT_DESCRIPTION="$2"
+      else
+        echo "Error: wrong name of $1"
+        exit 1
+      fi
+      shift 2
+      ;;
+    -cp | --cmake-package)
+      if [ $# -ge 2 ] && [[ ! $2 =~ ^-.*$ ]] ; then
+        CMAKE_PACKAGES+=($2)
+      else
+        echo "Error: wrong name of $1"
+        exit 1
+      fi
+      shift 2
+      ;;
+    -h | --help)
+      help
+      ;;
+    -.*)
+      echo "Invalid option: $1" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires arguments." >&2
+      exit 1
+      ;;
+    *)
+      if [ $# -ge 0 ] ; then
+        echo "Error: wrong parameters cpecified"
+        echo $1
+        help
+        exit 1
+      else
+        break
+      fi
+      ;;
+    esac
+  done
+fi
+
+  
 
 if [ -z "$PROJECT_NAME" ]; then 
   echo "Project name should be cpecified";
@@ -136,7 +186,7 @@ git clone git@github.com:Myralllka/template-nodelet.git "mrs_$PROJECT_NAME"
   mv ./src/example.cpp "./src/$CLASS_NAME.cpp" || exit 1
   sed -i "s/CLASS_NAME/$CLASS_NAME/g" "./src/$CLASS_NAME.cpp" || exit 1
   sed -i "s/NAMESPACE_NAME/$NAMESPACE_NAME/g" "./src/$CLASS_NAME.cpp" || exit
-  echo -e "creating $CLASS_NAME.h done"
+  echo -e "creating $CLASS_NAME.cpp done"
 
   mv ./launch/example.launch "./launch/$PROJECT_NAME.launch" || exit 1
   sed -i "s/CLASS_NAME/$CLASS_NAME/g" "./launch/$PROJECT_NAME.launch" || exit 1
