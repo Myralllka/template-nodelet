@@ -6,6 +6,8 @@ set(FILESNAME more_filesname)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+add_compile_options(-Wall -Wextra -pedantic -Werror -Werror=vla)
+
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
