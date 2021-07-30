@@ -66,6 +66,29 @@ while [ $# -ge 1 ]; do
   esac
 done
 
+
+if [ -z "$PROJECT_NAME" ]; then 
+  echo "Project name should be cpecified";
+  exit 1; 
+fi
+
+if [ -z "$NAMESPACE_NAME" ]; then 
+  echo "Namespace name should be cpecified";
+  exit 1; 
+fi
+
+if [ -z "$CLASS_NAME" ]; then 
+  echo "Class name (nodelet name) should be cpecified";
+  exit 1; 
+fi
+
+if [ -z "$AUTHOR_EMAIL" ]; then 
+  echo "Author email should be cpecified";
+  exit 1; 
+fi
+
+
+
 printf -v CMAKE_PACKAGES "%s " "${CMAKE_PACKAGES[@]}"
 
 CMAKE_PACKAGES=${CMAKE_PACKAGES%?}
@@ -108,7 +131,6 @@ git clone git@github.com:Myralllka/template-nodelet.git "mrs_$PROJECT_NAME"
 
   rm -rf .git || exit 1
   echo "Creating empty $PROJECT_NAME project finished. Now you can rename this directory, add it to git and start working."
-
 )
 
 
