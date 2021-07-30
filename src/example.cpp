@@ -52,4 +52,4 @@ namespace NAMESPACE_NAME {
 }  // namespace NAMESPACE_NAME  
 
 /* every nodelet must export its class as nodelet plugin */
-PLUGINLIB_EXPORT_CLASS(NAMESPACE_NAME::CLASS_NAME, nodelet::Nodelet);
+PLUGINLIB_EXPORT_CLASS(NAMESPACE_NAME::CLASS_NAME, nodelet::Nodelet)
