@@ -13,11 +13,11 @@ The script:
 - optionally: setting description, author name and email
 
 ### There are short and long ways of usage
-short:
-`./mrs_create_nodelet_template.sh -s project_name namespace_name class_name`
-long:
-`./mrs_create_nodelet_template.sh [options]`
-available options:
+short: <br>
+`./mrs_create_nodelet_template.sh -s project_name namespace_name class_name` <br>
+long: <br>
+`./mrs_create_nodelet_template.sh [options]` <br>
+available options: <br>
 ```[bash]
     -h      --help                  Show help message.
     -pn     --project-name          Project name. example_project by default.
