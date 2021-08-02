@@ -17,7 +17,7 @@ CMAKE_PACKAGES=()
 help() {
     echo "
   Usage: long form   ./mrs_create_nodelet_template.sh [options]
-  OR:    short form  ./mrs_create_nodelet_template.sh -s project_name namespace_name class_name
+  OR:    short form  ./mrs_create_nodelet_template.sh -s project_name namespace_name class_name path
   Options:
     -h      --help                  Show help message.
     -pn     --project-name          Project name. example_project by default.
@@ -27,6 +27,7 @@ help() {
     -cn     --class-name            Nodelet class name
     -an     --author-name           Author name
     -ae     --author-email          Should be cpecified for correct compilation!
+    -pp     --project_path          Where you want to create new node. ./ by default
     "
     exit 0
 }
@@ -35,6 +36,7 @@ if [[ $1 == "-s" ]]; then
   PROJECT_NAME=$2
   NAMESPACE_NAME=$3
   CLASS_NAME=$4
+  PROJECT_PATH=$5
 else
   while [ $# -ge 1 ]; do
     case "$1" in
@@ -68,6 +70,15 @@ else
     -an | --author-name)
       if [ $# -ge 2 ] && [[ ! $2 =~ ^-.*$ ]] ; then
         AUTHOR_NAME="$2"
+      else
+        echo "Error: wrong value of $1"
+        exit 1
+      fi
+      shift 2
+      ;;
+    -pp | --project-path)
+       if [ $# -ge 2 ] && [[ ! $2 =~ ^-.*$ ]] ; then
+        PROJECT_PATH="$2"
       else
         echo "Error: wrong value of $1"
         exit 1
@@ -158,10 +169,10 @@ printf -v CMAKE_PACKAGES "%s " "${CMAKE_PACKAGES[@]}"
 
 CMAKE_PACKAGES=${CMAKE_PACKAGES%?}
 
-git clone git@github.com:Myralllka/template-nodelet.git "mrs_$PROJECT_NAME"
+git clone git@github.com:Myralllka/template-nodelet.git "$PROJECT_NAME"
 
 (
-  cd "mrs_$PROJECT_NAME" 
+  cd "$PROJECT_NAME" 
   
   sed -i "s/more_project_name/$PROJECT_NAME/g" ./CMakeLists.txt || exit 1
   sed -i "s/more_filesname/$CLASS_NAME/g" ./CMakeLists.txt || exit 1
