@@ -14,7 +14,7 @@ The script:
 
 ### There are short and long ways of usage
 short: <br>
-`./mrs_create_nodelet_template.sh -s project_name namespace_name class_name` <br>
+`./mrs_create_nodelet_template.sh -s project_name namespace_name class_name path` <br>
 long: <br>
 `./mrs_create_nodelet_template.sh [options]` <br>
 available options: <br>
@@ -27,4 +27,5 @@ available options: <br>
     -cn     --class-name            Nodelet class name
     -an     --author-name           Author name
     -ae     --author-email          Should be cpecified for correct compilation!
+    -pp     --project-path          Where to create new project. ./ by default
 ```
