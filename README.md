@@ -1,5 +1,6 @@
 # Template for mrs nodelet
 
+
 This project consists of:
 - script for setting up a new nodelet as a fresh project with some features predefined
 - template directory
