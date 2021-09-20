@@ -1,5 +1,5 @@
 <library path="lib/libmore_class_name">
-  <class name="more_project_name/more_class_name" type="more_namespace_name::more_class_name" base_class_type="nodelet::Nodelet">
+  <class name="more_namespace_name/more_class_name" type="more_namespace_name::more_class_name" base_class_type="nodelet::Nodelet">
     <description>more_project_name nodelet</description>
   </class>
 </library>
