@@ -27,14 +27,14 @@ namespace NAMESPACE_NAME {
 
     private:
         /* flags */
-        bool is_initialized = false;
+        bool m_is_initialized = false;
         /* ros parameters */
 
-        std::string _uav_name_;
+        std::string m_uav_name;
 
         // | --------------------- MRS transformer -------------------- |
 
-        mrs_lib::Transformer transformer_;
+        mrs_lib::Transformer m_transformer;
 
         // | ---------------------- msg callbacks --------------------- |
 
@@ -45,7 +45,7 @@ namespace NAMESPACE_NAME {
 
         // | ----------------------- publishers ----------------------- |
 
-        ros::Publisher pub_example;
+        ros::Publisher m_pub_example;
 
         // | --------------------- other functions -------------------- |
 

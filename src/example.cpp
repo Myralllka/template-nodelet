@@ -21,24 +21,24 @@ namespace NAMESPACE_NAME {
         // | ------------------- load ros parameters ------------------ |
         /* (mrs_lib implementation checks whether the parameter was loaded or not) */
 
-        mrs_lib::ParamLoader param_loader(nh, "CLASS_NAME");
+        mrs_lib::ParamLoader pl(nh, "CLASS_NAME");
 
-        param_loader.loadParam("UAV_NAME", _uav_name_);
+        param_loader.pl("UAV_NAME", m_uav_name);
 
-        if (!param_loader.loadedSuccessfully()) {
+        if (!pl.loadedSuccessfully()) {
             ROS_ERROR("[CLASS_NAME]: failed to load non-optional parameters!");
             ros::shutdown();
         }
 
         // | --------------------- tf transformer --------------------- |
 
-        transformer_ = mrs_lib::Transformer("CLASS_NAME", _uav_name_);
+        m_transformer = mrs_lib::Transformer("CLASS_NAME", m_uav_name);
 
         // | -------------------- initialize timers ------------------- |
 
         ROS_INFO_ONCE("[CLASS_NAME]: initialized");
 
-        is_initialized = true;
+        m_is_initialized = true;
     }
 //}
 
