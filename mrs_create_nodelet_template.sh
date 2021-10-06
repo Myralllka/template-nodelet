@@ -169,7 +169,7 @@ printf -v CMAKE_PACKAGES "%s " "${CMAKE_PACKAGES[@]}"
 
 CMAKE_PACKAGES=${CMAKE_PACKAGES%?}
 
-git clone git@github.com:Myralllka/template-nodelet.git "$PROJECT_NAME"
+git clone git@github.com:Myralllka/template_nodelet.git "$PROJECT_NAME"
 
 (
   cd "$PROJECT_NAME" 
