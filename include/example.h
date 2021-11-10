@@ -28,24 +28,27 @@ namespace NAMESPACE_NAME {
     private:
         /* flags */
         bool m_is_initialized = false;
-        /* ros parameters */
 
+        /* ros parameters */
         std::string m_uav_name;
+
+        /* other parameters */
 
         // | --------------------- MRS transformer -------------------- |
 
         mrs_lib::Transformer m_transformer;
 
         // | ---------------------- msg callbacks --------------------- |
+        [[maybe_unused]] void m_callb_example(const nav_msgs::Odometry::ConstPtr &msg);
 
         // | --------------------- timer callbacks -------------------- |
-
-        // | --------- variables, related to message checking --------- |
-
+        [[maybe_unused]] void m_tim_callb_example([[maybe_unused]] const ros::TimerEvent &ev);
 
         // | ----------------------- publishers ----------------------- |
-
         ros::Publisher m_pub_example;
+
+        // | ----------------------- subscribers ---------------------- |
+        ros::Subscriber m_sub_example;
 
         // | --------------------- other functions -------------------- |
 
