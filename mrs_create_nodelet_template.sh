@@ -19,15 +19,15 @@ help() {
   Usage: long form   ./mrs_create_nodelet_template.sh [options]
   OR:    short form  ./mrs_create_nodelet_template.sh -s project_name namespace_name class_name path
   Options:
-    -h      --help                  Show help message.
-    -pn     --project-name          Project name. example_project by default.
-    -pd     --project-description   Project description. Write description as a one space-separated string (in columns).
-    -cp     --cmake-packages        Used for cmake "find_package". 'roscpp' and 'mrs_lib' are default packages. Write packages as a one space-separated string (in columns). Example: 'std_msgs roscpp mrs_lib'
-    -nn     --namespace-name        Namespace
-    -cn     --class-name            Nodelet class name
-    -an     --author-name           Author name
-    -ae     --author-email          Should be cpecified for correct compilation!
-    -pp     --project_path          Where you want to create new node. ./ by default
+    -h      --help                  show help message
+    -pn     --project-name          project name. example_project by default
+    -pd     --project-description   project description. Write description as a text in quotes
+    -cp     --cmake-packages        Used for cmake \"find_package\". default: 'roscpp mrs_lib std_msgs'
+    -nn     --namespace-name        namespace
+    -cn     --class-name            nodelet class name
+    -an     --author-name           author name
+    -ae     --author-email          should be specified for correct compilation!
+    -pp     --project-path          where to create new project. default: ./ 
     "
     exit 0
 }
