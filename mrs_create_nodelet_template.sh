@@ -206,6 +206,7 @@ git clone git@github.com:Myralllka/template_nodelet.git "$PROJECT_NAME"
   echo -e "creating $CLASS_NAME.launch done\n"
 
   rm -rf .git || exit 1
+  rm ./mrs_create_nodelet_template.sh || exit 1
   echo "Creating empty $PROJECT_NAME project finished. Now you can rename this directory, add it to git and start working."
 )
 
