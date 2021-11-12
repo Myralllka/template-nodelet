@@ -14,6 +14,11 @@
 #include <mrs_lib/param_loader.h>
 #include <mrs_lib/transformer.h>
 
+/* other important includes */
+#include <nav_msgs/Odometry.h>
+
+/* user includes */
+
 //}
 
 namespace NAMESPACE_NAME {
@@ -39,9 +44,11 @@ namespace NAMESPACE_NAME {
         mrs_lib::Transformer m_transformer;
 
         // | ---------------------- msg callbacks --------------------- |
-        [[maybe_unused]] void m_callb_example(const nav_msgs::Odometry::ConstPtr &msg);
+        [[maybe_unused]] void m_callb_example([[maybe_unused]] const nav_msgs::Odometry::ConstPtr &msg);
 
         // | --------------------- timer callbacks -------------------- |
+        ros::Timer m_tim_example;
+
         [[maybe_unused]] void m_tim_callb_example([[maybe_unused]] const ros::TimerEvent &ev);
 
         // | ----------------------- publishers ----------------------- |

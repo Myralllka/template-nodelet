@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   mrs_lib
+  nav_msgs
   more_cmake_packages
 )
 

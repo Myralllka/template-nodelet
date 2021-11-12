@@ -16,7 +16,7 @@
   <depend>nodelet</depend>
   <depend>std_msgs</depend>
   <depend>mrs_lib</depend>
-  <depend>cv_bridge</depend>
+  <depend>nav_msgs</depend>
 
   <export>
     <!-- The plugins.xml file defines nodelet as a plugin -->

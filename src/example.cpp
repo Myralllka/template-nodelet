@@ -2,6 +2,7 @@
 
 /* every nodelet must include macros which export the class as a nodelet plugin */
 #include <pluginlib/class_list_macros.h>
+#include "example.h"
 
 namespace NAMESPACE_NAME {
 
@@ -28,12 +29,12 @@ namespace NAMESPACE_NAME {
             ROS_ERROR("[CLASS_NAME]: failed to load non-optional parameters!");
             ros::shutdown();
         } else {
-            ROS_INFO_ONCE("[CLASS_NAME]: loaded parameters")
+            ROS_INFO_ONCE("[CLASS_NAME]: loaded parameters");
         }
         // | ---------------- some data post-processing --------------- |
 
         // | ----------------- publishers initialize ------------------ |
-        m_pub_example = nh.advertise<nav_msgs::Odometry>("odometry_echo", 1) // last param for queue size
+        m_pub_example = nh.advertise<nav_msgs::Odometry>("odometry_echo", 1); // last param for queue size
 
         // | ---------------- subscribers initialize ------------------ |
         m_sub_example = nh.subscribe("/odometry/odom_main", 1, &CLASS_NAME::m_callb_example, this); // second parameter for queue size
@@ -42,7 +43,7 @@ namespace NAMESPACE_NAME {
         m_transformer = mrs_lib::Transformer("CLASS_NAME", m_uav_name);
 
         // | -------------------- initialize timers ------------------- |
-        m_timer_marker = nh.createTimer(ros::Duration(0.1), &CLASS_NAME::m_tim_callb_example, this);
+        m_tim_marker = nh.createTimer(ros::Duration(0.1), &CLASS_NAME::m_tim_callb_example, this);
         ROS_INFO_ONCE("[CLASS_NAME]: initialized");
 
         m_is_initialized = true;
@@ -51,13 +52,13 @@ namespace NAMESPACE_NAME {
 
 
 // | ---------------------- msg callbacks --------------------- |
-    [[maybe_unused]] void CLASS_NAME::m_callb_example(const nav_msgs::Odometry::ConstPtr &msg) {
-        if (not is_initialized) return;
+    [[maybe_unused]] void CLASS_NAME::m_callb_example([[maybe_unused]] const nav_msgs::Odometry::ConstPtr &msg) {
+        if (not m_is_initialized) return;
     }
 
 // | --------------------- timer callbacks -------------------- |
-    void CLASS_NAME::tim_callback_example([[maybe_unused]] const ros::TimerEvent &ev) {
-        if (not is_initialized) return;
+    [[maybe_unused]] void CLASS_NAME::m_tim_callb_example([[maybe_unused]] const ros::TimerEvent &ev) {
+        if (not m_is_initialized) return;
     }
 // | -------------------- other functions ------------------- |
 
