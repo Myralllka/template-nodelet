@@ -25,7 +25,7 @@
   <!-- Namespace - all topics and parameters will be remapped using this namespace as a prefix (eg.: "/vision_example/image_in" to "/uav1/vision_example/image_in") -->
   <group ns="$(arg UAV_NAME)">
 
-    <!-- ClASS_NAME nodelet -->
+    <!-- CLASS_NAME nodelet -->
     <node pkg="nodelet" type="nodelet" name="NAMESPACE_NAME" args="$(arg nodelet) NAMESPACE_NAME/CLASS_NAME $(arg nodelet_manager)" launch-prefix="$(arg launch_prefix_debug)" output="screen">
 
       <!-- Parameters loaded from launch file -->
