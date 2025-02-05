@@ -125,7 +125,7 @@ else
       ;;
     *)
       if [ $# -ge 0 ] ; then
-        echo "Error: wrong parameters cpecified: $1"
+        echo "Error: wrong parameters specified: $1"
         echo $1
         help
         exit 1
@@ -140,25 +140,25 @@ fi
   
 
 if [ -z "$PROJECT_NAME" ]; then 
-  echo "Project name should be cpecified";
+  echo "Project name should be specified";
   help;
   exit 1; 
 fi
 
 if [ -z "$NAMESPACE_NAME" ]; then 
-  echo "Namespace name should be cpecified";
+  echo "Namespace name should be specified";
   help;
   exit 1; 
 fi
 
 if [ -z "$CLASS_NAME" ]; then 
-  echo "Class name (nodelet name) should be cpecified";
+  echo "Class name (nodelet name) should be specified";
   help;
   exit 1; 
 fi
 
 if [ -z "$AUTHOR_EMAIL" ]; then 
-  echo "Author email should be cpecified";
+  echo "Author email should be specified";
   help;
   exit 1; 
 fi
